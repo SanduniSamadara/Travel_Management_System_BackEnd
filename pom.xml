@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>../../UserAgency/UserAgency</module>
 		<module>UserService</module>
 		<module>GuideService</module>
 		<module>TravelService</module>
 		<module>HotelService</module>
 		<module>VehicleService</module>
-	</modules>
+        <module>ServiceRegistry</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
