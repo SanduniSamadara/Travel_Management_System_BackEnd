@@ -15,12 +15,9 @@ public class HotelDTO {
     private String name;
     private boolean isPetAllowed;
     private String location;
-    private String cancellationCriteria;
     private double hotelFee;
-    private String locationWithCoordinates;
     private String email;
     private String remarks;
     private Contact contact;
-    private String hotel_category_id;
 
 }
