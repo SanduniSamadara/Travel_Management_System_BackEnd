@@ -1,4 +1,4 @@
-package com.example.travelAgency.userService.dto;
+package com.example.travelAgency.travelService.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class ImageDTO {
-    private byte[] front_view;
-    private byte[] rear_view;
+public class ResponseUtil {
+    private int code;
+    private String message;
+    private Object data;
+
 }
