@@ -1,4 +1,4 @@
-package com.example.travelAgency.guideService.entity;
+package com.example.travelAgency.userService.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
@@ -12,8 +12,8 @@ import lombok.ToString;
 @Data
 @ToString
 @Embeddable
-@Table(name = "guideId")
-public class GuideId {
+@Table(name = "image")
+public class Image {
     private byte[] front_view;
     private byte[] rear_view;
 }
