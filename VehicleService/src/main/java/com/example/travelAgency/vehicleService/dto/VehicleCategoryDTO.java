@@ -9,10 +9,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class ImageDTO {
-    private byte[] front_view;
-    private byte[] rear_view;
-    private byte[] side_view;
-    private byte[] front_interior;
-    private byte[] rear_interior;
+public class VehicleCategoryDTO {
+    private String regular;
+    private String midLevel;
+    private String luxury;
+    private String superLuxury;
+
 }

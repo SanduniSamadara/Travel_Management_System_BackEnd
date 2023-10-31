@@ -1,5 +1,7 @@
 package com.example.travelAgency.vehicleService.dto;
 
+import com.example.travelAgency.vehicleService.entity.VehicleCategory;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ public class VehicleDTO {
     private boolean isHybrid;
     private int seatCapacity;
     private String vehicleType;
-    private ImageDTO image;
+    private byte[] ImagesVehicle;
     private String transmissionType;
     private int fuelUsage;
     private String fuelType;
@@ -23,6 +25,6 @@ public class VehicleDTO {
     private String driverName;
     private String driverContact;
     private byte[] driver_license_image;
-    private String vehicle_category_id;
+    private VehicleCategory vehicle_category_id;
 
 }
