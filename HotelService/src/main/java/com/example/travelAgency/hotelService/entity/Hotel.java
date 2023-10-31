@@ -29,7 +29,6 @@ public class Hotel {
     @NotEmpty(message = "Location shouldn't be empty")
     private String location;
     @NotEmpty(message = "Hotel Fee shouldn't be empty")
-    @Negative(message = " Hotel Fee shouldn't be empty")
     @Min(value = 0, message = "Hotel Fee shouldn't be less than 0")
     private double hotelFee;
     @Email(message = "Invalid email address")

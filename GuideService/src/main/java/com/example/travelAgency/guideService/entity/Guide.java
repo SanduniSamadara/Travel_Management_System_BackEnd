@@ -40,7 +40,6 @@ public class Guide implements Super{
     @Pattern(regexp ="^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$" , message = "Invalid contact number")
     private String contact;
     @NotEmpty(message = "Man day value shouldn't be empty")
-    @Negative(message = " Man day value shouldn't be empty")
     @Min(value = 0, message = "Man day value shouldn't be less than 0")
     private int manDayValues;
 }
