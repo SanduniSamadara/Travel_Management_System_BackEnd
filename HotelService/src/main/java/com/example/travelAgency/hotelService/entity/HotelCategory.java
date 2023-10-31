@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class HotelCategory {
+public class HotelCategory implements Super{
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
