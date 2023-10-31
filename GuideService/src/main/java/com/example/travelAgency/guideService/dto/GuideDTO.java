@@ -14,9 +14,10 @@ public class GuideDTO {
     private String name;
     private String address;
     private String experience;
-    private byte[] image;
-    private NicImageDTO guide_nic_image;
-    private GuideIdDTO guide_id_image;
+    private byte[] guide_nic_image_front_view;
+    private byte[] guide_nic_image_rare_view;
+    private byte[] guide_id_image_front_view;
+    private byte[] guide_id_image_rare_view;
     private String gender;
     private String remarks;
     private String contact;
