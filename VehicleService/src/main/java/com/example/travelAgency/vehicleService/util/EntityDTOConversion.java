@@ -20,4 +20,5 @@ public class EntityDTOConversion {
     public VehicleDTO getVehicleDTO(Vehicle vehicle) {
         return modelMapper.map(vehicle, VehicleDTO.class);
     }
+
 }

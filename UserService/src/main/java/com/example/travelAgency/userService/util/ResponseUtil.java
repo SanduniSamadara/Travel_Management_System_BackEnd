@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class ResponseUtil {
+public class ResponseUtil<T> {
     private int code;
     private String message;
     private Object data;

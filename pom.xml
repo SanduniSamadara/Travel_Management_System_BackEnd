@@ -9,7 +9,8 @@
 		<module>TravelService</module>
 		<module>HotelService</module>
 		<module>VehicleService</module>
-        <module>ServiceRegistry</module>
+		<module>APIGateway</module>
+        <module>DiscoveryServer</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

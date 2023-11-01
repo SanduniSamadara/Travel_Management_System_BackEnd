@@ -1,14 +1,12 @@
 package com.example.travelAgency.guideService.util;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
+@Builder
 public class ResponseUtil {
     private int code;
     private String message;

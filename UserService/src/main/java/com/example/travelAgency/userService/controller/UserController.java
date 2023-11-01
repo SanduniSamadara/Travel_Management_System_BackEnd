@@ -2,46 +2,56 @@ package com.example.travelAgency.userService.controller;
 
 
 import com.example.travelAgency.userService.bo.UserBO;
+import com.example.travelAgency.userService.dto.ResponseDTO;
 import com.example.travelAgency.userService.dto.UserDTO;
 import com.example.travelAgency.userService.util.ResponseUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/user")
 @CrossOrigin
 public class UserController {
 
+    private final UserBO userBO;
+
     @Autowired
-    UserBO userBO;
-
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil saveUser(UserDTO userDTO) {
-        userBO.saveUser(userDTO);
-        return new ResponseUtil(200, "Customer Added..!", null);
+    public UserController(UserBO userBO) {
+        this.userBO = userBO;
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateUser(UserDTO userDTO) {
-        userBO.updateUser(userDTO);
-        return new ResponseUtil(200, "Customer Updated..!", null);
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil<UserDTO> saveUser(@ModelAttribute @Valid UserDTO user) throws IOException {
+        userBO.saveUser(user);
+        return new ResponseUtil<UserDTO>(201, "Saved", null);
     }
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteUser(String id) {
-        userBO.deleteUser(id);
-        return new ResponseUtil(200,"Customer Deleted...!",null);
+
+    @PutMapping
+    public ResponseUtil<UserDTO> updateUser(@ModelAttribute @Valid UserDTO user) throws IOException {
+        userBO.updateUser(user);
+        return new ResponseUtil<UserDTO>(200, "Updated", null);
     }
 
-    @GetMapping(path = "/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchUser(@PathVariable String userId){
-        return new ResponseUtil(200,"Ok",userBO.searchUser(userId));
+    @DeleteMapping(path = "/{username}")
+    public ResponseUtil<UserDTO> deleteUser(@PathVariable("username") String username) throws IOException {
+        userBO.deleteUser(username);
+        return new ResponseUtil<UserDTO>(200, "Updated", null);
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseUtil getAllUsers() {
-        return new ResponseUtil(200,"Ok",userBO.getAllUsers());
+    @GetMapping
+    public ResponseUtil<List<ResponseDTO>> getAllUsers(){
+        return new ResponseUtil<>(200,"Ok",userBO.getAllUsers());
+    }
 
+    @GetMapping(path = "/username")
+    public boolean isExistUserByUsername(@RequestParam("username") String username){
+        return userBO.isExistUserByUsername(username);
     }
 }

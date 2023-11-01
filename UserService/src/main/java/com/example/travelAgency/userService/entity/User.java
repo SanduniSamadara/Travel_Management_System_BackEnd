@@ -1,6 +1,5 @@
 package com.example.travelAgency.userService.entity;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,20 +7,20 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
+@Builder
+@Document
 public class User implements Super {
     @Id
     @GeneratedValue
-    private String userId;
+    private long userId;
     @NotNull(message = "Username shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "Invalid username")
     private String userName;
@@ -33,9 +32,9 @@ public class User implements Super {
             regexp = "^(user|admin)$")
     private String role;
     @NotEmpty(message = "User's NIC front side Images shouldn't be empty")
-    private byte[] user_nic_image_front_view;
+    private String user_nic_image_front_view;
     @NotEmpty(message = "User's NIC rare side image shouldn't be empty")
-    private byte[] user_nic_image_rare_view;
+    private String user_nic_image_rare_view;
     @NotEmpty(message = "Gender shouldn't be empty")
     private String gender;
     @Email(message = "Invalid email address")

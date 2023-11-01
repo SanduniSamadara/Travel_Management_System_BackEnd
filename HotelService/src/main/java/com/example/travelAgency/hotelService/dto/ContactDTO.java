@@ -1,4 +1,4 @@
-package com.example.travelAgency.guideService.dto;
+package com.example.travelAgency.hotelService.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class GuideIdDTO {
-    private byte[] front_view;
-    private byte[] rear_view;
+public class ContactDTO {
+    private String contact_one;
+    private String contact_two;
 }
