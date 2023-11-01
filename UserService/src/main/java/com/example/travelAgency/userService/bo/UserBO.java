@@ -13,12 +13,11 @@ public interface UserBO {
 
     public void updateUser(UserDTO userDTO) throws IOException;
 
-    public UserDTO searchUser(String id);
-
-    public void deleteUser(String id);
+    public UserDTO searchUser(long id);
 
     public List<ResponseDTO> getAllUsers();
 
     boolean isExistUserByUsername(String username);
 
+    void deleteUser(String username);
 }

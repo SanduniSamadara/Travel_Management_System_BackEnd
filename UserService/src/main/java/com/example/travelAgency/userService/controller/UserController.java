@@ -42,7 +42,7 @@ public class UserController {
     @DeleteMapping(path = "/{username}")
     public ResponseUtil<UserDTO> deleteUser(@PathVariable("username") String username) throws IOException {
         userBO.deleteUser(username);
-        return new ResponseUtil<UserDTO>(200, "Updated", null);
+        return new ResponseUtil<UserDTO>(200, "Deleted", null);
     }
 
     @GetMapping

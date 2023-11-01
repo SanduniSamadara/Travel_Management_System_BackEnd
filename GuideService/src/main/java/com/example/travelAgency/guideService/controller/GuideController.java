@@ -2,43 +2,53 @@ package com.example.travelAgency.guideService.controller;
 
 import com.example.travelAgency.guideService.bo.GuideBO;
 import com.example.travelAgency.guideService.dto.GuideDTO;
+import com.example.travelAgency.guideService.dto.ResponseDTO;
 import com.example.travelAgency.guideService.util.ResponseUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/guide")
 @CrossOrigin
 public class GuideController {
 
-    GuideBO guideBO;
+    private final GuideBO guideBO;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil saveGuide(GuideDTO guideDTO, Object guideIdDTO) {
-        guideBO.saveGuide(guideDTO, guideIdDTO);
-        return new ResponseUtil(200, "Guide Added..!", null);
+    @Autowired
+    public GuideController(GuideBO guideBO) {
+        this.guideBO = guideBO;
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateGuide(GuideDTO guideDTO) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil<GuideDTO> saveGuide(@ModelAttribute @Valid GuideDTO guideDTO) throws IOException {
+        guideBO.saveGuide(guideDTO);
+        return new ResponseUtil<GuideDTO>(201, "Saved", null);
+    }
+
+    @PutMapping
+    public ResponseUtil updateGuide(@ModelAttribute @Valid GuideDTO guideDTO) {
         guideBO.updateGuide(guideDTO);
         return new ResponseUtil(200, "Guide Updated..!", null);
     }
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteGuide(String id) {
-        guideBO.deleteGuide(id);
-        return new ResponseUtil(200,"Guide Deleted...!",null);
+    @DeleteMapping(path = "{/guideName}")
+    public ResponseUtil<GuideDTO> deleteGuide(@PathVariable("guideName") String name) {
+        guideBO.deleteGuide(name);
+        return new ResponseUtil(200, "Guide Deleted...!", null);
     }
 
-    @GetMapping(path = "/{guideId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchGuide(@PathVariable String guideId){
-        return new ResponseUtil(200,"Ok",guideBO.searchGuide(guideId));
+    @GetMapping(path = "{/guideName}")
+    public boolean isExistGuideByGuideName(@RequestParam("guideName") String name) {
+        return guideBO.isExistGuideByGuideName(name);
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseUtil getAllGuides() {
-        return new ResponseUtil(200,"Ok",guideBO.getAllGuides());
+    @GetMapping
+    public ResponseUtil<List<ResponseDTO>> getAllGuides(){
+        return new ResponseUtil<>(200,"Ok",guideBO.getAllGuides());
     }
 }

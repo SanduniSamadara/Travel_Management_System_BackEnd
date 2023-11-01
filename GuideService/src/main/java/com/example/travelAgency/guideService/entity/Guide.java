@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @AllArgsConstructor
@@ -12,10 +13,11 @@ import lombok.*;
 @Data
 @ToString
 @Builder
+@Document
 public class Guide implements Super{
     @Id
     @GeneratedValue
-    private String guideId;
+    private long guideId;
     @NotNull(message = "Guide name shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid name")
     private String name;
@@ -25,13 +27,13 @@ public class Guide implements Super{
     @NotEmpty(message = "Experience shouldn't be empty")
     private String experience;
     @NotEmpty(message = "Guide's NIC images shouldn't be empty")
-    private byte[] guide_nic_image_front_view;
+    private String guide_nic_image_front_view;
     @NotEmpty(message = "Guide's NIC images shouldn't be empty")
-    private byte[] guide_nic_image_rare_view;
+    private String guide_nic_image_rare_view;
     @NotEmpty(message = "Guide's Id images shouldn't be empty")
-    private byte[] guide_id_image_front_view;
+    private String guide_id_image_front_view;
     @NotEmpty(message = "Guide's Id images shouldn't be empty")
-    private byte[] guide_id_image_rare_view;
+    private String guide_id_image_rare_view;
     @NotEmpty(message = "Gender shouldn't be empty")
     private String gender;
     @NotEmpty(message = "Remarks shouldn't be empty")

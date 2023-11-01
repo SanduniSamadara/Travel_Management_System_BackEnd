@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,9 +65,10 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public UserDTO searchUser(String id) {
+    public UserDTO searchUser(long id) {
         return null;
     }
+
 
   /*  @Override
     public UserDTO searchUser(String id) {
@@ -83,17 +85,6 @@ public class UserBOImpl implements UserBO {
         }*//*
     }
  */
-
-    @Override
-    public void deleteUser(String userName) {
-        User byUsername = repository.findByUsername(userName);
-        if ( byUsername== null) {
-            throw new NotFoundException("Username not found. Username is " + userName);
-        } else {
-            repository.delete(byUsername);
-        }
-    }
-
     @Override
     public List<ResponseDTO> getAllUsers() {
         return mapper.map(repository.findAll(), new TypeToken<List<ResponseDTO>>() {
@@ -102,5 +93,15 @@ public class UserBOImpl implements UserBO {
     @Override
     public boolean isExistUserByUsername(String username) {
         return repository.existsByUsername(username);
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        User byUserName = repository.findByUsername(username);
+        if ( byUserName== null) {
+            throw new NotFoundException("Username not found. Username is " + username);
+        } else {
+            repository.delete(byUserName);
+        }
     }
 }

@@ -1,52 +1,41 @@
 package com.example.travelAgency.guideService.bo.boImpl;
 
+import com.example.travelAgency.guideService.bo.GuideBO;
+import com.example.travelAgency.guideService.bo.exception.AlreadyExistException;
+import com.example.travelAgency.guideService.bo.exception.NotFoundException;
 import com.example.travelAgency.guideService.dto.GuideDTO;
+import com.example.travelAgency.guideService.dto.ResponseDTO;
 import com.example.travelAgency.guideService.entity.Guide;
 import com.example.travelAgency.guideService.repository.GuideRepo;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
+@Transactional
+public class GuideBOImpl implements GuideBO {
+    private final ModelMapper mapper;
+    private final GuideRepo repository;
 
-public class GuideBOImpl {
-    private final GuideRepo guideRepo;
-
-    public void saveGuide(GuideDTO guideDTO, Object guideIdDTO) {
-        Guide guide = Guide.builder()
-                .name(guideDTO.getName())
-                .address(guideDTO.getAddress())
-                .experience(guideDTO.getAddress())
-                .gender(guideDTO.getGender())
-                .remarks(guideDTO.getRemarks())
-                .contact(guideDTO.getContact())
-                .manDayValues(guideDTO.getManDayValues())
-                .build();
-
-        guideRepo.save(guide);
-        log.info("Guide is Saved", guide.getGuideId());
-
+    @Autowired
+    public GuideBOImpl(ModelMapper mapper, GuideRepo repository) {
+        this.mapper = mapper;
+        this.repository = repository;
     }
 
-
-    public void updateGuide(GuideDTO guideDTO, Object guideIdDTO) {
-        Guide guide = Guide.builder()
-                .name(guideDTO.getName())
-                .address(guideDTO.getAddress())
-                .experience(guideDTO.getAddress())
-                .gender(guideDTO.getGender())
-                .remarks(guideDTO.getRemarks())
-                .contact(guideDTO.getContact())
-                .manDayValues(guideDTO.getManDayValues())
-                .build();
-
-        guideRepo.save(guide);
-        log.info("Guide is Updated", guide.getGuideId());
-
+    @Override
+    public void updateGuide(GuideDTO guideDTO) {
+        Guide guideEntity = mapper.map(guideDTO, Guide.class);
+        if (repository.findByGuideName(guideDTO.getName()) == null) {
+            throw new NotFoundException("Guide Name Not Found. Guide Name is +" + guideDTO.getName());
+        } else {
+            /*String imgBase64 = Base64.getEncoder().encodeToString(guideDTO.getGuide_id_image_front_view().getBytes());
+            guideEntity.getGuide_id_image_front_view(imgBase64);*/
+        }
     }
 
 
@@ -54,16 +43,38 @@ public class GuideBOImpl {
         return null;
     }
 
-    public void deleteGuide(String id) {
+    public void deleteGuide(String name) {
+        Guide byName = mapper.map(name, Guide.class);
+        if (byName==null){
+            throw new NotFoundException("Guide Id is not Found.Guide Id is"+name);
+        }else {
+            repository.delete(byName);
+        }
 
     }
 
-    public List<Guide> getAllGuides() {
-        List<Guide> all = guideRepo.findAll();
-        return all.stream().unordered().map(this::mapToGuide).toList();
+    public List<ResponseDTO> getAllGuides() {
+        return mapper.map(repository.findAll(),new TypeToken<List<ResponseDTO>>(){
+        }.getType());
     }
 
-    private  Guide mapToGuide(Guide guide) {
+    @Override
+    public boolean isExistGuideByGuideName(String name) {
+        return repository.existsByGuideName(name);
+    }
+
+    @Override
+    public void saveGuide(GuideDTO guideDTO) {
+        Guide guideEntity = mapper.map(guideDTO, Guide.class);
+        if (repository.findByGuideName(guideDTO.getName()) != null) {
+            throw new AlreadyExistException("Guide Name Already Exists. Guide Name is +" + guideDTO.getName());
+        } else {
+            /*String imgBase64 = Base64.getEncoder().encodeToString(guideDTO.getGuide_id_image_front_view().getBytes());
+            guideEntity.getGuide_id_image_front_view(imgBase64);*/
+        }
+    }
+
+   /* private Guide mapToGuide(Guide guide) {
         return Guide.builder()
                 .guideId(guide.getGuideId())
                 .name(guide.getName())
@@ -75,7 +86,7 @@ public class GuideBOImpl {
                 .manDayValues(guide.getManDayValues())
                 .build();
 
-    }
+    }*/
 }
 
 
