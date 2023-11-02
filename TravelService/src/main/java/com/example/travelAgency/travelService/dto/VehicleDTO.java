@@ -1,7 +1,5 @@
-package com.example.travelAgency.vehicleService.dto;
+package com.example.travelAgency.travelService.dto;
 
-import com.example.travelAgency.vehicleService.entity.VehicleCategory;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +38,6 @@ public class VehicleDTO {
     private String driverContact;
     @NotEmpty(message = "Driver License Image shouldn't be empty")
     private byte[] driver_license_image;
-    private VehicleCategory vehicle_category_id;
 
 
 

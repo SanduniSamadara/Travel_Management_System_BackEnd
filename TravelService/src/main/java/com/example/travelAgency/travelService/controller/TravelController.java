@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class TravelController {
 
-    @Autowired
+
     TravelBO travelBO;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)

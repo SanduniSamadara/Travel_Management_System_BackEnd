@@ -1,6 +1,5 @@
-package com.example.travelAgency.hotelService.dto;
+package com.example.travelAgency.travelService.dto;
 
-import com.example.travelAgency.hotelService.entity.Contact;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +27,5 @@ public class HotelDTO {
     private String email;
     @NotEmpty(message = "Remarks shouldn't be empty")
     private String remarks;
-    private Contact contact;
 
 }
