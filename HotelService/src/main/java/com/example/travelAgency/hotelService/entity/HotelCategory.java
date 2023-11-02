@@ -17,7 +17,6 @@ import lombok.ToString;
 public class HotelCategory implements Super{
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
     private HotelCategory Hotel_category_id;
     private String two_and_three_stars;
     private String three_and_four_stars;

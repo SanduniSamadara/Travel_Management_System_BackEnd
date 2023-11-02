@@ -35,7 +35,7 @@ public class UserBOImpl implements UserBO {
     @Override
     public void saveUser(UserDTO user) throws IOException {
         User userEntity = mapper.map(user, User.class);
-        if (repository.findByUsername(user.getUserName()) != null) {
+        if (repository.findByUserName(user.getUserName()) != null) {
             throw new AlreadyExistException("Username already exists. Username is " + user.getUserName());
         } else {
 
@@ -51,7 +51,7 @@ public class UserBOImpl implements UserBO {
     @Override
     public void updateUser(UserDTO user) throws IOException {
         User userEntity = mapper.map(user, User.class);
-        if (repository.findByUsername(user.getUserName()) == null) {
+        if (repository.findByUserName(user.getUserName()) == null) {
             throw new NotFoundException("Username not found. Username is " + user.getUserName());
         } else {
             String imgBase64 = Base64.getEncoder().encodeToString(user.getUser_nic_image_front_view().getBytes());
@@ -92,12 +92,13 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean isExistUserByUsername(String username) {
-        return repository.existsByUsername(username);
+        return repository.existsByUserName(username);
+
     }
 
     @Override
     public void deleteUser(String username) {
-        User byUserName = repository.findByUsername(username);
+        User byUserName = repository.findByUserName(username);
         if ( byUserName== null) {
             throw new NotFoundException("Username not found. Username is " + username);
         } else {

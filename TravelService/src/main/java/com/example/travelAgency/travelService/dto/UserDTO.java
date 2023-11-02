@@ -1,4 +1,4 @@
-package com.example.travelAgency.userService.dto;
+package com.example.travelAgency.travelService.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

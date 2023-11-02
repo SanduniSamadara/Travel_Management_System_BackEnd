@@ -7,7 +7,6 @@ import com.example.travelAgency.hotelService.repository.HotelRepo;
 import com.example.travelAgency.hotelService.util.EntityDTOConversion;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +16,12 @@ import java.util.List;
 @Transactional
 public class HotelBOImpl implements HotelBO {
 
-    @Autowired
     ModelMapper modelMapper;
 
-    @Autowired
+
     HotelRepo hotelRepo;
 
-    @Autowired
+
     EntityDTOConversion conversion;
 
     @Override
@@ -58,6 +56,7 @@ public class HotelBOImpl implements HotelBO {
 
     @Override
     public List<HotelDTO> getAllHotels() {
-        return modelMapper.map(hotelRepo.findAll(), new TypeToken<List<HotelDTO>>() {}.getType());
+        return modelMapper.map(hotelRepo.findAll(), new TypeToken<List<HotelDTO>>() {
+        }.getType());
     }
 }

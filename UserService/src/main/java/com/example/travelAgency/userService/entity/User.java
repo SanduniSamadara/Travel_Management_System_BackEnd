@@ -1,7 +1,7 @@
 package com.example.travelAgency.userService.entity;
 
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,13 +13,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @ToString
 @Builder
 @Document
 public class User implements Super {
+
+
     @Id
-    @GeneratedValue
     private long userId;
     @NotNull(message = "Username shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "Invalid username")

@@ -1,7 +1,6 @@
 package com.example.travelAgency.guideService.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -10,17 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @ToString
 @Builder
 @Document
 public class Guide implements Super{
     @Id
-    @GeneratedValue
     private long guideId;
     @NotNull(message = "Guide name shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid name")
-    private String name;
+    private String guideName;
     @NotNull(message = "Guide address shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid address")
     private String address;

@@ -36,15 +36,15 @@ public class GuideController {
         return new ResponseUtil(200, "Guide Updated..!", null);
     }
 
-    @DeleteMapping(path = "{/guideName}")
-    public ResponseUtil<GuideDTO> deleteGuide(@PathVariable("guideName") String name) {
-        guideBO.deleteGuide(name);
+    @DeleteMapping(path = "{guideName}")
+    public ResponseUtil<GuideDTO> deleteGuide(@PathVariable("guideName") String guideName) {
+        guideBO.deleteGuide(guideName);
         return new ResponseUtil(200, "Guide Deleted...!", null);
     }
 
-    @GetMapping(path = "{/guideName}")
-    public boolean isExistGuideByGuideName(@RequestParam("guideName") String name) {
-        return guideBO.isExistGuideByGuideName(name);
+    @GetMapping(path = "/guideName")
+    public boolean isExistGuideByGuideName(@PathVariable("guideName") String guideName) {
+        return guideBO.isExistGuideByGuideName(guideName);
     }
 
     @GetMapping
