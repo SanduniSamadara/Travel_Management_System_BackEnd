@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class Hotel {
+public class Hotel implements Super{
 
     @Id
     @GeneratedValue
