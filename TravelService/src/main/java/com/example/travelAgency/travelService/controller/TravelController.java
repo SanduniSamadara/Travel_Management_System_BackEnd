@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class TravelController {
 
-
     TravelBO travelBO;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -22,25 +21,25 @@ public class TravelController {
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateTravel(TravelDTO travelDTO) {
-        travelBO.updateTravel(travelDTO);
+    public ResponseUtil updateTravel(TravelDTO travelDTO, String id) {
+        travelBO.updateTravel(travelDTO, id);
         return new ResponseUtil(200, "Travel package Updated..!", null);
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil deleteTravel(String id) {
         travelBO.deleteTravel(id);
-        return new ResponseUtil(200,"Travel Package Deleted...!",null);
+        return new ResponseUtil(200, "Travel Package Deleted...!", null);
     }
 
-    @GetMapping(path = "/{packageId}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchUser(@PathVariable String packageId){
-        return new ResponseUtil(200,"Ok",travelBO.searchTravel(packageId));
+    @GetMapping(path = "/{packageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchUser(@PathVariable String packageId) {
+        return new ResponseUtil(200, "Ok", travelBO.searchTravel(packageId));
     }
 
     @GetMapping(produces = "application/json")
     public ResponseUtil getAllTravel() {
-        return new ResponseUtil(200,"Ok",travelBO.getAllTravel());
+        return new ResponseUtil(200, "Ok", travelBO.getAllTravel());
 
     }
 }

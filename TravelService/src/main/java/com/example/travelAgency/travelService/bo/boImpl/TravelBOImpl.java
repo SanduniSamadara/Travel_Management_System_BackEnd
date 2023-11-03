@@ -4,10 +4,13 @@ import com.example.travelAgency.travelService.bo.TravelBO;
 import com.example.travelAgency.travelService.dto.TravelDTO;
 import com.example.travelAgency.travelService.entity.Travel;
 import com.example.travelAgency.travelService.repository.TravelRepo;
-import jakarta.ws.rs.NotFoundException;
+import com.example.travelAgency.travelService.util.EntityDTOConversion;
+import com.example.travelAgency.userService.bo.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Base64;
 import java.util.List;
 
 public class TravelBOImpl implements TravelBO {
@@ -15,11 +18,13 @@ public class TravelBOImpl implements TravelBO {
     private final TravelRepo travelRepo;
     private final ModelMapper modelMapper;
     private final WebClient.Builder webClientBuilder;
+    private final EntityDTOConversion entityDTOConversion;
 
-    public TravelBOImpl(TravelRepo travelRepo, ModelMapper modelMapper, WebClient.Builder webClientBuilder) {
+    public TravelBOImpl(TravelRepo travelRepo, ModelMapper modelMapper, WebClient.Builder webClientBuilder, EntityDTOConversion entityDTOConversion) {
         this.travelRepo = travelRepo;
         this.modelMapper = modelMapper;
         this.webClientBuilder = webClientBuilder;
+        this.entityDTOConversion = entityDTOConversion;
     }
 
     @Override
@@ -83,32 +88,55 @@ public class TravelBOImpl implements TravelBO {
 
         // Save to the database
         travelRepo.save(modelMapper.map(travelDTO, Travel.class));
-    }
 
-    @Override
-    public void updateTravel(TravelDTO travelDTO) {
+        if (!travelRepo.existsById(travelDTO.getPackageId())){
+            Travel travel = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
+            byte[] base64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images()).getBytes();
+            travel.setUserNIC_images(base64);
+            travelRepo.save(travel);
 
+        }
     }
 
     @Override
     public TravelDTO searchTravel(String id) {
+        if (travelRepo.existsById(String.valueOf(id))) {
+            Travel travel = travelRepo.findById(String.valueOf(id)).get();
+            TravelDTO travelDTO = entityDTOConversion.getTravelDTO(travel);
+            return travelDTO;
+        }
         return null;
     }
 
     @Override
     public void deleteTravel(String id) {
-
+        if (travelRepo.existsById(String.valueOf(id))) {
+            travelRepo.deleteById(String.valueOf(id));
+        }
     }
 
     @Override
     public List<TravelDTO> getAllTravel() {
-        return null;
+        List<Travel> all = travelRepo.findAll();
+        List<TravelDTO> travelDTOList = modelMapper.map(all, new TypeToken<List<TravelDTO>>() {
+        }.getType());
+        return travelDTOList;
+    }
+
+
+    @Override
+    public void updateTravel(TravelDTO travelDTO, String id) {
+        if (travelRepo.existsById(String.valueOf(id))){
+            byte[] base64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images()).getBytes();
+            entityDTOConversion.getTravelEntity(travelDTO).setUserNIC_images(base64);
+            travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
+
+        }
     }
 
     private boolean guideIsNeeded(TravelDTO travelDTO) {
         // For example, check if travelDTO.getGuideId() is not null or another condition.
         return travelDTO.getGuideId() != null;
     }
-
 }
 

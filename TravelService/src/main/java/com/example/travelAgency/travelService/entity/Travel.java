@@ -42,7 +42,6 @@ public class Travel implements Super {
 
     @Embedded
     private Package packageValue;
-
     @Embedded
     private Duration travelDuration;
 
@@ -57,7 +56,5 @@ public class Travel implements Super {
     @NotEmpty(message = " Adult count shouldn't be empty")
     @Min(value = 1, message = "Adult count shouldn't be less than 1")
     private int headCounts;
-
-
 
 }
